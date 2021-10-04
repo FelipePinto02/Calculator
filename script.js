@@ -9,10 +9,29 @@ let toOperate = {
     b: '',
     operator: '',
 }
+let result = displayResult.textContent
 
 aritmeticOperators.forEach((aritmeticOperator) => {
     aritmeticOperator.addEventListener('click', () => {
-        toOperate.operator = aritmeticOperator.value
+        if(toOperate.operator === '') {
+            toOperate.operator = aritmeticOperator.value
+            if(toOperate.a == '') {
+                displayResult.textContent = `${num1} ${toOperate.operator}`
+            }
+            else {
+                displayResult.textContent = `${toOperate.a} ${toOperate.operator}`
+            }
+        }
+        else if(toOperate.operator !== '') {
+            if(toOperate.b == '') {
+                toOperate.operator = aritmeticOperator.value
+                displayResult.textContent = `${num1} ${toOperate.operator}`
+            }
+            else {
+                toOperate.operator = aritmeticOperator.value
+                displayResult.textContent = `${num1} ${toOperate.operator} ${num2}`
+            }
+        }
     })
 })
 
@@ -22,11 +41,18 @@ digits.forEach((digit) => {
             digitSelected = digit.value
             num1 = num1 + digitSelected
             toOperate.a = num1
+            displayResult.textContent = num1
         }
         else if(toOperate['operator'] !== '') {
             digitSelected = digit.value
             num2 = num2 + digitSelected
             toOperate.b = num2
+            if(toOperate.a == '') {
+                displayResult.textContent = `${num1} ${toOperate.operator} ${num2}`
+            }
+            else {
+                displayResult.textContent = `${toOperate.a} ${toOperate.operator} ${num2}`
+            }
         }
     })
 })
@@ -40,12 +66,49 @@ function operate() {
         const result = add(a, b)
         displayResult.textContent = `${result}`
         toOperate.a = result
+        toOperate.operator = ''
         num2 = ''
     }
     if (operator === '-') {
         const result = substract(a, b)
         displayResult.textContent = `${result}`
         toOperate.a = result
+        toOperate.operator = ''
+        num2 = ''
+    }
+    if (operator === '*') {
+        const result = multiply(a, b)
+        displayResult.textContent = `${result}`
+        toOperate.a = result
+        toOperate.operator = ''
+        num2 = ''
+    }
+    if (operator === '/') {
+        const result = divide(a, b)
+        displayResult.textContent = `${result}`
+        toOperate.a = result
+        toOperate.operator = ''
+        num2 = ''
+    }
+}
+
+function chainOperate() {
+    a = parseInt(toOperate['a'])
+    b = parseInt(toOperate['b'])
+    operator = toOperate['operator']
+
+    if (operator == '+') {
+        const result = add(a, b)
+        displayResult.textContent = `${result}`
+        toOperate.a = result
+        toOperate.b = ''
+        num2 = ''
+    }
+    if (operator === '-') {
+        const result = substract(a, b)
+        displayResult.textContent = `${result}`
+        toOperate.a = result
+        toOperate.b = ''
         num2 = ''
     }
     if (operator === '*') {
