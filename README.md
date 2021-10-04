@@ -1,0 +1,1 @@
+Last JavaScript project for TOP's Foundations. A working calculator with HTML, CSS and JavaScript.
