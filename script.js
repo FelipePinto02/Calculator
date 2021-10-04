@@ -1,4 +1,4 @@
-const result = document.querySelector('.result')
+const displayResult = document.querySelector('.display-result')
 const aritmeticOperators = document.querySelectorAll('#aritmetic-operator')
 const digits = document.querySelectorAll('#digit')
 const equalOperator = document.querySelector('#equal-operator').addEventListener('click', operate)
@@ -37,28 +37,28 @@ function operate() {
     operator = toOperate['operator']
 
     if (operator == '+') {
-        const equal = add(a, b)
-        result.textContent = `${equal}`
-        clearResult()
-        return(equal)
+        const result = add(a, b)
+        displayResult.textContent = `${result}`
+        toOperate.a = result
+        num2 = ''
     }
     if (operator === '-') {
-        const equal = substract(a, b)
-        result.textContent = `${equal}`
-        clearResult()
-        return(equal)
+        const result = substract(a, b)
+        displayResult.textContent = `${result}`
+        toOperate.a = result
+        num2 = ''
     }
     if (operator === '*') {
-        const equal = multiply(a, b)
-        result.textContent = `${equal}`
-        clearResult()
-        return(equal)
+        const result = multiply(a, b)
+        displayResult.textContent = `${result}`
+        toOperate.a = result
+        num2 = ''
     }
     if (operator === '/') {
-        const equal = divide(a, b)
-        result.textContent = `${equal}`
-        clearResult()
-        return(equal)
+        const result = divide(a, b)
+        displayResult.textContent = `${result}`
+        toOperate.a = result
+        num2 = ''
     }
 }
 
