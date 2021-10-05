@@ -47,22 +47,34 @@ aritmeticOperators.forEach((aritmeticOperator) => {
 
 digits.forEach((digit) => {
     digit.addEventListener('click', () => {
-        if(toOperate['operator'] === '') {
+        if(toOperate.operator === '') {
             if(typeof num1 === 'number') {
                 num1 = ''
                 digitSelected = digit.value
-                num1 = num1 + digitSelected
-                toOperate.a = num1
-                displayResult.textContent = num1
+                if(digitSelected === '0' && displayResult.textContent === '0') {
+                    displayResult.textContent = '0'
+                    toOperate.a = '0'
+                }
+                else {
+                    num1 = num1 + digitSelected
+                    toOperate.a = num1
+                    displayResult.textContent = num1
+                }
             }
             else {
                 digitSelected = digit.value
-                num1 = num1 + digitSelected
-                toOperate.a = num1
-                displayResult.textContent = num1
+                if(digitSelected === '0' && displayResult.textContent === '0') {
+                    displayResult.textContent = '0'
+                    toOperate.a = '0'
+                }
+                else {
+                    num1 = num1 + digitSelected
+                    toOperate.a = num1
+                    displayResult.textContent = num1
+                }
             }
         }
-        else if(toOperate['operator'] !== '') {
+        else if(toOperate.operator !== '') {
             digitSelected = digit.value
             num2 = num2 + digitSelected
             toOperate.b = num2
@@ -77,6 +89,9 @@ digits.forEach((digit) => {
 })
 
 function operate() {
+    if(toOperate.b == '') {
+        toOperate.b = toOperate.a
+    }
     a = parseFloat(toOperate.a)
     b = parseFloat(toOperate.b)
     operator = toOperate['operator']
@@ -92,6 +107,7 @@ function operate() {
             toOperate.a = result
             num1 = result
             toOperate.operator = ''
+            toOperate.b = ''
             num2 = ''
         }
         if (operator === '-') {
@@ -100,6 +116,7 @@ function operate() {
             toOperate.a = result
             num1 = result
             toOperate.operator = ''
+            toOperate.b = ''
             num2 = ''
         }
         if (operator === 'x') {
@@ -108,6 +125,7 @@ function operate() {
             toOperate.a = result
             num1 = result
             toOperate.operator = ''
+            toOperate.b = ''
             num2 = ''
         }
         if (operator === '÷') {
@@ -116,6 +134,7 @@ function operate() {
             toOperate.a = result
             num1 = result
             toOperate.operator = ''
+            toOperate.b = ''
             num2 = ''
         }
     }
@@ -140,7 +159,7 @@ function divide(a, b) {
 function clearResult() {
     num1 = ''
     num2 = ''
-    displayResult.textContent = ''
+    displayResult.textContent = '0'
     toOperate = {
         a: '',
         b: '',
@@ -190,9 +209,15 @@ function percentage() {
 }
 
 function positiveNegative() {
-    if(toOperate.operator == '') {
-        if(num1.includes('-')) {
-            num1 = num1.replace('-', '') 
+    if(typeof num1 == 'number') {
+        num1 = num1*-1
+        toOperate.a = num1
+        displayResult.textContent = num1
+    }
+    else {
+        if(toOperate.operator == '') {
+            if(num1.includes('-')) {
+            num1 = num1.replace('-', '')  
             toOperate.a = num1
             displayResult.textContent = num1
         }
@@ -204,7 +229,7 @@ function positiveNegative() {
     }
     else {
         if(num2.includes('-')) {
-            num2 = num2.replace('-', '') 
+            num2 = num2.replace('-', '')  
             toOperate.b = num2
             displayResult.textContent = `${num1} ${toOperate.operator} ${num2}`
         }
@@ -214,6 +239,7 @@ function positiveNegative() {
             displayResult.textContent = `${num1} ${toOperate.operator} ${num2}`
         }
     }
+}
 }
 
 function backspace() {
