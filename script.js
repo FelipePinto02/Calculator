@@ -52,25 +52,19 @@ digits.forEach((digit) => {
                 num1 = ''
                 digitSelected = digit.value
                 if(digitSelected === '0' && displayResult.textContent === '0') {
-                    displayResult.textContent = '0'
-                    toOperate.a = '0'
+                    displayZero()
                 }
                 else {
-                    num1 = num1 + digitSelected
-                    toOperate.a = num1
-                    displayResult.textContent = num1
+                    displayNum1()
                 }
             }
             else {
                 digitSelected = digit.value
                 if(digitSelected === '0' && displayResult.textContent === '0') {
-                    displayResult.textContent = '0'
-                    toOperate.a = '0'
+                    displayZero()
                 }
                 else {
-                    num1 = num1 + digitSelected
-                    toOperate.a = num1
-                    displayResult.textContent = num1
+                    displayNum1()
                 }
             }
         }
@@ -103,41 +97,30 @@ function operate() {
     else {
         if (operator == '+') {
             const result = add(a, b)
-            displayResult.textContent = `${result}`
-            toOperate.a = result
-            num1 = result
-            toOperate.operator = ''
-            toOperate.b = ''
-            num2 = ''
+            calculate(result)
         }
         if (operator === '-') {
             const result = substract(a, b)
-            displayResult.textContent = `${result}`
-            toOperate.a = result
-            num1 = result
-            toOperate.operator = ''
-            toOperate.b = ''
-            num2 = ''
+            calculate(result)
         }
         if (operator === 'x') {
             const result = multiply(a, b)
-            displayResult.textContent = `${result}`
-            toOperate.a = result
-            num1 = result
-            toOperate.operator = ''
-            toOperate.b = ''
-            num2 = ''
+            calculate(result)
         }
         if (operator === '÷') {
             const result = divide(a, b)
-            displayResult.textContent = `${result}`
-            toOperate.a = result
-            num1 = result
-            toOperate.operator = ''
-            toOperate.b = ''
-            num2 = ''
+            calculate(result)
         }
     }
+}
+
+function calculate(result) {
+    displayResult.textContent = `${result}`
+    toOperate.a = result
+    num1 = result
+    toOperate.operator = ''
+    toOperate.b = ''
+    num2 = ''
 }
 
 function add(a, b) {
@@ -168,92 +151,115 @@ function clearResult() {
 }
 
 function turnDecimal() {
+    toOperate.a = `${toOperate.a}`
+    num1 = `${num1}`
     if(toOperate.operator == '') {
-        if(num1.includes('.')) {
-            num1 = num1
-            toOperate.a = num1
-            displayResult.textContent = num1
+        if(toOperate.a == '' ) {
+                num1 = '0'
+                num1 = num1 + '.'
+                treatNum1()
         }
         else {
-            num1 = num1 + '.'
-            toOperate.a = num1
-            displayResult.textContent = num1
+            if(num1.includes('.')) {
+                num1 = num1
+                treatNum1()
+            }
+            else {
+                num1 = num1 + '.'
+                treatNum1()
+            }
         }
     }
     else {
-        if(num2.includes('.')) {
-            num2 = num2
-            toOperate.b = num2
-            displayResult.textContent = `${num1} ${toOperate.operator} ${num2}`
+        if(toOperate.b == '') {
+                num2 = '0'
+                num2 = num2 + '.'
+                treatNum2()
         }
         else {
-            num2 = num2 + '.'
-            toOperate.b = num2
-            displayResult.textContent = `${num1} ${toOperate.operator} ${num2}`
+            if(num2.includes('.')) {
+                num2 = num2
+                treatNum2()
+            }
+            else {
+                num2 = num2 + '.'
+                treatNum2()
+            }
         }
-        
     }
 }
 
 function percentage() {
     if(toOperate.operator == '') {
         num1 = num1/100
-        toOperate.a = num1
-        displayResult.textContent = num1
+        treatNum1()
     }
     else {
         num2 = num1 * num2/100
-        toOperate.b = num2
-        displayResult.textContent = `${num1} ${toOperate.operator} ${num2}`
+        treatNum2()
     }
 }
 
 function positiveNegative() {
     if(typeof num1 == 'number') {
         num1 = num1*-1
-        toOperate.a = num1
-        displayResult.textContent = num1
+        treatNum1()
     }
     else {
         if(toOperate.operator == '') {
             if(num1.includes('-')) {
             num1 = num1.replace('-', '')  
-            toOperate.a = num1
-            displayResult.textContent = num1
+            treatNum1()
+            }
+            else {
+                num1 = '-' + num1
+                treatNum1()
+            }
         }
         else {
-            num1 = '-' + num1
-            toOperate.a = num1
-            displayResult.textContent = num1
+            if(num2.includes('-')) {
+                num2 = num2.replace('-', '')  
+                treatNum2()
+            }
+            else {
+                num2 = '-' + num2
+                treatNum2()
+            }
         }
     }
-    else {
-        if(num2.includes('-')) {
-            num2 = num2.replace('-', '')  
-            toOperate.b = num2
-            displayResult.textContent = `${num1} ${toOperate.operator} ${num2}`
-        }
-        else {
-            num2 = '-' + num2
-            toOperate.b = num2
-            displayResult.textContent = `${num1} ${toOperate.operator} ${num2}`
-        }
-    }
-}
 }
 
 function backspace() {
-    if(typeof num1 === 'number' && num2 === '') {
+    if(typeof num1 === 'number' && num2 === '' || displayResult.textContent === '0') {
         return
     }
     else if(toOperate.operator == '') {
         num1 = num1.slice(0, -1)
-        toOperate.a = num1
-        displayResult.textContent = num1
+        treatNum1()
     }
     else {
         num2 = num2.slice(0, -1)
-        toOperate.b = num2
-        displayResult.textContent = `${num1} ${toOperate.operator} ${num2}`
+        treatNum2()
     }
+}
+
+function displayNum1() {
+    num1 = num1 + digitSelected
+    toOperate.a = num1
+    displayResult.textContent = num1
+}
+
+function displayZero() {
+    displayResult.textContent = '0'
+    toOperate.a = '0'
+}
+
+function treatNum1() {
+    toOperate.a = num1
+    displayResult.textContent = num1
+}
+
+function treatNum2() {
+    toOperate.b = num2
+    displayResult.textContent = `${num1} ${toOperate.operator} ${num2}`
 }
