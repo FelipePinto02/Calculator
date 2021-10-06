@@ -64,7 +64,13 @@ digits.forEach((digit) => {
                     displayZero()
                 }
                 else {
-                    displayNum1()
+                    if(num1[0]== '0') {
+                        num1 = num1.replace('0', '')
+                        displayNum1()
+                    }
+                    else {
+                        displayNum1()
+                    }
                 }
             }
         }
@@ -161,11 +167,11 @@ function turnDecimal() {
         }
         else {
             if(num1.includes('.')) {
-                num1 = num1
+                num1 = toOperate.a
                 treatNum1()
             }
             else {
-                num1 = num1 + '.'
+                num1 = toOperate.a + '.'
                 treatNum1()
             }
         }
@@ -178,11 +184,11 @@ function turnDecimal() {
         }
         else {
             if(num2.includes('.')) {
-                num2 = num2
+                num2 = toOperate.b
                 treatNum2()
             }
             else {
-                num2 = num2 + '.'
+                num2 = toOperate.b + '.'
                 treatNum2()
             }
         }
@@ -230,12 +236,19 @@ function positiveNegative() {
 }
 
 function backspace() {
-    if(typeof num1 === 'number' && num2 === '' || displayResult.textContent === '0') {
+    if(typeof num1 === 'number' && num2 === '' || displayResult.textContent === '0' ) {
         return
     }
     else if(toOperate.operator == '') {
-        num1 = num1.slice(0, -1)
-        treatNum1()
+        if(num1["length"] <= 1 || num1 === '0') {
+            num1 = num1.slice(0, -1)
+            treatNum1()
+            displayResult.textContent = 0
+        }
+        else {
+            num1 = num1.slice(0, -1)
+            treatNum1()
+        }
     }
     else {
         num2 = num2.slice(0, -1)

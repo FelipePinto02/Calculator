@@ -121,7 +121,7 @@ window.addEventListener('keydown', function(e) {
         backspace()
     }
     
-    else if(e.key == 'Enter' || '=') {
+    else if(e.key === 'Enter' || e.key === '=') {
         if(toOperate.a == '' || toOperate.b == '' || toOperate.operator == '') {
             return
         }
