@@ -17,7 +17,7 @@ let toOperate = {
 
 aritmeticOperators.forEach((aritmeticOperator) => {
     aritmeticOperator.addEventListener('click', () => {
-        if(toOperate.a == '' && toOperate.b == '') {
+        if(toOperate.a === '' && toOperate.b === '') {
             toOperate.operator == ''
         }
         else {
@@ -64,7 +64,7 @@ digits.forEach((digit) => {
                     displayZero()
                 }
                 else {
-                    if(num1[0]== '0') {
+                    if(num1[0] == '0') {
                         num1 = num1.replace('0', '')
                         displayNum1()
                     }

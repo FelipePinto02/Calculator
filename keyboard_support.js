@@ -28,11 +28,16 @@ window.addEventListener('keydown', function(e) {
         else {
             num2 = num2 + e.key
             toOperate.b = num2
-            displayResult.textContent = `${num1} ${toOperate.operator} ${num2}`
+            if(toOperate.a == '') {
+                displayResult.textContent = `${num1} ${toOperate.operator} ${num2}`
+            }
+            else {
+                displayResult.textContent = `${toOperate.a} ${toOperate.operator} ${num2}`
+            }
         }
     }
     else if(e.key == '+' || e.key == '-') {
-        if(toOperate.a == '' && toOperate.b == '') {
+        if(toOperate.a === '' && toOperate.b == '') {
             return
         }
         else {
@@ -122,7 +127,7 @@ window.addEventListener('keydown', function(e) {
     }
     
     else if(e.key === 'Enter' || e.key === '=') {
-        if(toOperate.a == '' || toOperate.b == '' || toOperate.operator == '') {
+        if(toOperate.a === '' || toOperate.b === '' || toOperate.operator === '') {
             return
         }
         else {
